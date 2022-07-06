@@ -1,44 +1,44 @@
 package com.experlabs.training.adapters
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.TextView
 import android.widget.Toast
+import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.experlabs.training.R
+import com.experlabs.training.databinding.MemeItemBinding
 import com.experlabs.training.models.Meme
 import com.squareup.picasso.Picasso
 
-class MemeAdapter(private val memes: List<Meme>) :
-    RecyclerView.Adapter<MemeAdapter.ViewHolder>() {
+class MemeAdapter(private val memes: List<Meme>) : RecyclerView.Adapter<MemeAdapter.ViewHolder>() {
 
-    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val name = view.findViewById<TextView>(R.id.memeitem_name)
-        val imageview  = view.findViewById<ImageView>(R.id.memeitem_image)
+    inner class ViewHolder(val binding : MemeItemBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(item : Meme){
+            binding.memeitem = item
+        }
 
         init {
-            view.setOnClickListener{
+            itemView.setOnClickListener{
                 val position : Int = adapterPosition
-                Toast.makeText(view.context, "Height=${memes[position].height} Width=${memes[position].width}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(itemView.context, "Box count=${memes[position].box_count}", Toast.LENGTH_SHORT).show()
             }
         }
     }
 
      override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
-         val view = LayoutInflater.from(viewGroup.context)
-            .inflate(R.layout.meme_item, viewGroup, false)
-
-        return ViewHolder(view)
+         val inflater = LayoutInflater.from(viewGroup.context)
+         val itembinding = MemeItemBinding.inflate(inflater, viewGroup, false)
+         return ViewHolder(itembinding)
     }
 
    override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-
-        viewHolder.name.text = memes[position].name
-        Picasso.get().load(memes[position].url).into(viewHolder.imageview);
-    }
+        viewHolder.bind(memes[position])}
 
     override fun getItemCount() = memes.size
 
+}
+
+@BindingAdapter("imageFromURL")
+fun ImageView.imageFromURL(url : String){
+    Picasso.get().load(url).into(this);
 }
