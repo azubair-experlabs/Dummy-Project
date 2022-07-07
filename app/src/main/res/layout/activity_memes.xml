@@ -10,14 +10,12 @@
         android:id="@+id/get_bt"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:backgroundTint="#4CAF50"
         android:text="Get Memes"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@+id/param_editText"
+        app:layout_constraintStart_toStartOf="@+id/param_editText"
+        app:layout_constraintTop_toBottomOf="@+id/param_editText" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/meme_recycler"
@@ -31,4 +29,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/get_bt"
         tools:listitem="@layout/meme_item" />
+
+    <EditText
+        android:id="@+id/param_editText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Parameters"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,10 +3,12 @@ package com.experlabs.training.activities
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.experlabs.training.adapters.MemeAdapter
 import com.experlabs.training.databinding.ActivityMemesBinding
 import com.experlabs.training.models.Meme
+import com.experlabs.training.models.Memelist
 import com.experlabs.training.viewmodels.MemeViewModel
 
 
@@ -25,17 +27,19 @@ class MemesActivity : AppCompatActivity() {
 
         memeViewModel = ViewModelProvider(this).get(MemeViewModel::class.java)
 
-        binding.getBt.setOnClickListener {
-            binding.memeRecycler.adapter = memeViewModel.memes.value?.memelist?.let{ memes ->
-                MemeAdapter(memes){ item ->
+        memeViewModel.memes.observe(this, Observer<Memelist> {
+            it?.memelist?.let { memes ->
+                binding.memeRecycler.adapter = MemeAdapter(memes) { item ->
                     doThis(item)
                 }
             }
+        })
+
+        binding.getBt.setOnClickListener {
+            memeViewModel.getMemesFromRepository()
         }
     }
 
-
-    //creating method to make it look simpler
     fun doThis(item: Meme) {
         Toast.makeText(this, "${item.id} Box count=${item.box_count}", Toast.LENGTH_SHORT).show()
     }
