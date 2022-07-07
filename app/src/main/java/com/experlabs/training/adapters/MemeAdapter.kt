@@ -23,7 +23,6 @@ class MemeAdapter(private val memes: List<Meme>, val adapterOnClick : (Meme) -> 
             }
         }
     }
-
      override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
          val inflater = LayoutInflater.from(viewGroup.context)
          val itembinding = MemeItemBinding.inflate(inflater, viewGroup, false)

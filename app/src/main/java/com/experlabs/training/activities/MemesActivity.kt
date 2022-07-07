@@ -1,6 +1,7 @@
 package com.experlabs.training.activities
 
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -27,16 +28,27 @@ class MemesActivity : AppCompatActivity() {
 
         memeViewModel = ViewModelProvider(this).get(MemeViewModel::class.java)
 
-        memeViewModel.memes.observe(this, Observer<Memelist> {
-            it?.memelist?.let { memes ->
-                binding.memeRecycler.adapter = MemeAdapter(memes) { item ->
-                    doThis(item)
-                }
-            }
-        })
-
         binding.getBt.setOnClickListener {
-            memeViewModel.getMemesFromRepository()
+            if (binding.paramEditText.text.isNotEmpty())
+                    memeViewModel.getMemesFromRepository(binding.paramEditText.text.toString()){ flag, message ->
+                        if (flag) {
+                            memeViewModel.memes.observe(this, Observer<Memelist> {
+                                it?.memelist?.let { memes ->
+                                    binding.memeRecycler.adapter = MemeAdapter(memes) { item ->
+                                        doThis(item)
+                                    }
+                                }
+                            })
+                            binding.memeRecycler.visibility = View.VISIBLE
+                            Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+                        }
+                        else{
+                            binding.memeRecycler.visibility = View.GONE
+                            Toast.makeText(this, "Failure:$message", Toast.LENGTH_SHORT).show()
+                        }
+                }
+            else
+                Toast.makeText(this, "Please enter parameters", Toast.LENGTH_SHORT).show()
         }
     }
 
