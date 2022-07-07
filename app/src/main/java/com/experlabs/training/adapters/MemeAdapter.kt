@@ -3,14 +3,13 @@ package com.experlabs.training.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.experlabs.training.databinding.MemeItemBinding
 import com.experlabs.training.models.Meme
 import com.squareup.picasso.Picasso
 
-class MemeAdapter(private val memes: List<Meme>) : RecyclerView.Adapter<MemeAdapter.ViewHolder>() {
+class MemeAdapter(private val memes: List<Meme>, val adapterOnClick : (Meme) -> Unit) : RecyclerView.Adapter<MemeAdapter.ViewHolder>() {
 
     inner class ViewHolder(val binding : MemeItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item : Meme){
@@ -20,7 +19,7 @@ class MemeAdapter(private val memes: List<Meme>) : RecyclerView.Adapter<MemeAdap
         init {
             itemView.setOnClickListener{
                 val position : Int = adapterPosition
-                Toast.makeText(itemView.context, "Box count=${memes[position].box_count}", Toast.LENGTH_SHORT).show()
+                adapterOnClick(memes[position])
             }
         }
     }
