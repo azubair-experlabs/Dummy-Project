@@ -1,15 +1,14 @@
 package com.experlabs.training.activities
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.experlabs.training.adapters.MemeAdapter
 import com.experlabs.training.databinding.ActivityMemesBinding
-import com.experlabs.training.repository.MemeRepository
-import com.experlabs.training.retrofit.ApiService
-import com.experlabs.training.retrofit.RetrofitObject
+import com.experlabs.training.models.Meme
 import com.experlabs.training.viewmodels.MemeViewModel
-import com.experlabs.training.viewmodels.MemeViewModelFactory
+
 
 
 class MemesActivity : AppCompatActivity() {
@@ -24,34 +23,20 @@ class MemesActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-        val api = RetrofitObject.getInstance().create(ApiService::class.java)
-        val repository = MemeRepository(api)
-
-        memeViewModel = ViewModelProvider(this, MemeViewModelFactory(repository)).get(MemeViewModel::class.java)
+        memeViewModel = ViewModelProvider(this).get(MemeViewModel::class.java)
 
         binding.getBt.setOnClickListener {
             binding.memeRecycler.adapter = memeViewModel.memes.value?.memelist?.let{ memes ->
-                MemeAdapter(memes)
+                MemeAdapter(memes){ item ->
+                    doThis(item)
+                }
             }
         }
-//        Log.i("API result", memelist.toString())
+    }
 
-//        val callback = object : Callback<Data?> {
-//            override fun onFailure(call: Call<Data?>, t: Throwable) {
-//                Toast.makeText(
-//                    this@MemesActivity, "Api Call Failed!", Toast.LENGTH_SHORT)
-//                    .show()
-//            }
-//
-//            override fun onResponse(call: Call<Data?>, response: Response<Data?>) {
-//                Toast.makeText(this@MemesActivity, "Successful!", Toast.LENGTH_SHORT)
-//                    .show()
-//                response.body()?.memes?.memelist?.also {
-//                    runOnUiThread {
-//                        binding.memeRecycler.adapter = MemeAdapter(it)
-//                    }
-//                }
-//            }
-//        }
+
+    //creating method to make it look simpler
+    fun doThis(item: Meme) {
+        Toast.makeText(this, "${item.id} Box count=${item.box_count}", Toast.LENGTH_SHORT).show()
     }
 }

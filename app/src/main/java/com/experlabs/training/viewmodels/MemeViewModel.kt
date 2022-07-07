@@ -7,8 +7,9 @@ import com.experlabs.training.models.Memelist
 import com.experlabs.training.repository.MemeRepository
 import kotlinx.coroutines.launch
 
-class MemeViewModel(private val repository: MemeRepository) : ViewModel(){
+class MemeViewModel : ViewModel(){
 
+    private val repository = MemeRepository()
     init {
         viewModelScope.launch {
             repository.getMemes()
