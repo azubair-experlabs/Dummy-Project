@@ -8,8 +8,9 @@ import com.experlabs.training.retrofit.RetrofitObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import retrofit2.Retrofit
 
-class MemeRepository {
+class MemeRepository(private val retrofit: RetrofitObject) {
 
     private val memesLiveData = MutableLiveData<Memelist>()
 
@@ -32,7 +33,7 @@ class MemeRepository {
             }
         }
 
-        RetrofitObject.getInstance().fetchMemes().enqueue(retrofitCallback)
+        retrofit.getInstance().fetchMemes().enqueue(retrofitCallback)
 
     }
 }
