@@ -6,27 +6,23 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.experlabs.training.models.Memelist
 import com.experlabs.training.repository.MemeRepository
-import com.experlabs.training.retrofit.RetrofitCallBacks
 import kotlinx.coroutines.launch
 
-class MemeViewModel : ViewModel() , RetrofitCallBacks {
+class MemeViewModel(private val repository: MemeRepository) : ViewModel() {
 
-    private val repository = MemeRepository()
-
-    fun getMemesFromRepository() {
+    fun getMemesFromRepository(params : String, callback: (Boolean, String) -> Unit) {
         viewModelScope.launch {
-            repository.getMemes(this@MemeViewModel)
+            repository.getMemes(params){flag, message ->
+                response(flag, message, params, callback)
+            }
         }
     }
 
     val memes : LiveData<Memelist>
     get() = repository.memes
 
-    override fun onResponse(flag: String) {
-        Log.i("OnResponse", flag)
-    }
-
-    override fun onFailure(t: Throwable) {
-        Log.i("OnFailure", t.toString())
+    fun response(flag: Boolean, message: String, params: String, callback: (Boolean, String) -> Unit) {
+        callback(flag, message)
+        Log.i("Response", "$message $params")
     }
 }
