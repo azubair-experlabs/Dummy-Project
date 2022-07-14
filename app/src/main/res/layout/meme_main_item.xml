@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="memeitem"
+            type="com.experlabs.training.models.Meme" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="4dp"
+        android:orientation="vertical"
+        android:layout_marginBottom="8dp">
+
+
+        <TextView
+            android:id="@+id/memeitem_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{memeitem.name}"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/memeitem_image"
+            imageFromURL="@{memeitem.url}"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:scaleType="fitCenter"
+            app:layout_constraintBottom_toTopOf="@+id/delete_bt"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/memeitem_name"
+            tools:src="@tools:sample/avatars" />
+
+        <Button
+            android:id="@+id/delete_bt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="186dp"
+            android:layout_weight="1"
+            android:backgroundTint="#F44336"
+            android:text="Delete"
+            android:textAlignment="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/memeitem_image"
+            app:layout_constraintStart_toStartOf="@+id/memeitem_image">
+        </Button>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

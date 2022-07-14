@@ -6,28 +6,41 @@
     android:layout_height="match_parent"
     tools:context=".activities.MainActivity">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
+    <Button
+        android:id="@+id/api_bt"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="Training Project"
-        android:textSize="20sp"
-        android:textStyle="bold"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:backgroundTint="#2196F3"
+        android:text="API Activity"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/retrofit_bt"
-        android:layout_width="wrap_content"
+        android:id="@+id/deleteAll_bt"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:backgroundTint="#F44336"
-        android:text="API Activity"
-        app:iconTint="#F44336"
+        android:layout_marginTop="8dp"
+        android:text="Delete All"
+        android:enabled="false"
+        app:layout_constraintEnd_toEndOf="@+id/api_bt"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/api_bt"
+        app:layout_constraintTop_toBottomOf="@+id/api_bt" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/main_recycler"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/deleteAll_bt"
+        tools:listitem="@layout/meme_main_item" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
