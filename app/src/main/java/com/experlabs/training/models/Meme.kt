@@ -1,7 +1,12 @@
 package com.experlabs.training.models
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity(tableName = "memes")
 data class Meme(
-    var id: String = "",
+
+    @PrimaryKey var id: String = "",
     var name: String = "",
     var url: String = "",
     var width: String = "",

@@ -8,7 +8,9 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.17255434782608695" />
         <entry key="app/src/main/res/layout/activity_memes.xml" value="0.23580474853515626" />
         <entry key="app/src/main/res/layout/activity_retrofit.xml" value="0.17255434782608695" />
+        <entry key="app/src/main/res/layout/meme_api_item.xml" value="0.2259963768115942" />
         <entry key="app/src/main/res/layout/meme_item.xml" value="0.11" />
+        <entry key="app/src/main/res/layout/meme_main_item.xml" value="0.2259963768115942" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.103" />
       </map>
     </option>
