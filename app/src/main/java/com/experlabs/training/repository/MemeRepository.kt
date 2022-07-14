@@ -10,6 +10,7 @@ import com.experlabs.training.room.MemeDatabase
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.lang.NullPointerException
 
 class MemeRepository(private val retrofit: RetrofitObject, private val database: MemeDatabase) {
 
@@ -35,19 +36,35 @@ class MemeRepository(private val retrofit: RetrofitObject, private val database:
         retrofit.getInstance().fetchMemes().enqueue(retrofitCallback)
     }
 
-    suspend fun getMemesFromLocal(){
-        database.dao()?.getAll().let {
-            memesLiveData.postValue(it as MutableList<Meme>?)
+    suspend fun getMemesFromLocal(callback: (Boolean, String) -> Unit) {
+        try {
+            memesLiveData.postValue(database.dao()!!.getAll() as MutableList<Meme>?)
+            callback(true, "Successfully Fetched")
+        }
+        catch (e : Throwable){
+            callback(false, e.toString())
         }
     }
 
-    suspend fun deleteFromLocal(meme : Meme){
-        database.dao()?.delete(meme)
-        memesLiveData.value?.remove(meme)
+    suspend fun deleteFromLocal(meme : Meme, callback: (Boolean, String) -> Unit) {
+        try {
+            database.dao()!!.delete(meme)
+            memesLiveData.value!!.remove(meme)
+            callback(true, "Deleted Successfully")
+        }
+        catch (e : Throwable){
+            callback(false, e.toString())
+        }
     }
 
-    suspend fun deleteAllFromLocal(){
-        database.dao()?.deleteAll()
-        memesLiveData.value?.clear()
+    suspend fun deleteAllFromLocal(callback: (Boolean, String) -> Unit) {
+        try {
+            database.dao()?.deleteAll()
+            memesLiveData.value?.clear()
+            callback(true, "Deleted All Successfully")
+        }
+        catch (e : Throwable){
+            callback(false, e.toString())
+        }
     }
 }
