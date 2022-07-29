@@ -15,8 +15,9 @@
         android:backgroundTint="#2196F3"
         android:text="API Activity"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/crash_bt" />
 
     <Button
         android:id="@+id/deleteAll_bt"
@@ -42,5 +43,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/deleteAll_bt"
         tools:listitem="@layout/meme_main_item" />
+
+    <Button
+        android:id="@+id/crash_bt"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#F44336"
+        android:text="CRASH"
+        app:layout_constraintEnd_toEndOf="@+id/api_bt"
+        app:layout_constraintStart_toStartOf="@+id/api_bt"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

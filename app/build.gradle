@@ -2,13 +2,15 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
+    id 'com.google.gms.google-services'
+    id 'com.google.firebase.crashlytics'
 }
 
 android {
     compileSdk 32
 
     defaultConfig {
-        applicationId "com.example.dummyproject"
+        applicationId "com.experlabs.training"
         minSdk 26
         targetSdk 32
         versionCode 1
@@ -72,12 +74,27 @@ dependencies {
 
     //Branch.io
     implementation 'io.branch.sdk.android:library:5.+'
+    implementation 'androidx.browser:browser:1.4.0'
 
     //Room
     implementation "androidx.room:room-runtime:2.4.2"
     implementation "androidx.room:room-ktx:2.4.2"
     kapt "androidx.room:room-compiler:2.4.2"
 
+    //Firebase Analytics
+    implementation 'com.google.firebase:firebase-analytics-ktx:21.0.0'
+
+    //Firebase Crashlytics
+    implementation 'com.google.firebase:firebase-crashlytics-ktx:18.2.11'
+
+    //FCM
+    implementation 'com.google.firebase:firebase-messaging-ktx:23.0.6'
+
+    //Firebase Database
+    implementation 'com.google.firebase:firebase-database-ktx:20.0.5'
+
+//    //Braze
+//    implementation "com.appboy:android-sdk-ui:21.0.0"
 
 
 

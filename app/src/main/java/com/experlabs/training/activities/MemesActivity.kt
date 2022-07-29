@@ -6,11 +6,9 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import androidx.room.RoomDatabase
 import com.experlabs.training.adapters.MemeAdapter
 import com.experlabs.training.databinding.ActivityMemesBinding
 import com.experlabs.training.models.Meme
-import com.experlabs.training.models.Memelist
 import com.experlabs.training.room.MemeDatabase
 import com.experlabs.training.viewmodels.MemeViewModel
 import kotlinx.coroutines.CoroutineScope

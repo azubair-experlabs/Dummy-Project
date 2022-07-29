@@ -1,17 +1,19 @@
 package com.experlabs.training.activities
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import com.experlabs.training.adapters.MemeAdapter
 import com.experlabs.training.adapters.MemeMainAdapter
+import com.experlabs.training.adapters.SnapHelperOneByOne
 import com.experlabs.training.databinding.ActivityMainBinding
+import com.experlabs.training.fcm.services.FirebaseMessagingService
 import com.experlabs.training.models.Meme
 import com.experlabs.training.viewmodels.MemeViewModel
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.messaging.FirebaseMessaging
 import io.branch.referral.Branch
 import io.branch.referral.BranchError
 import org.json.JSONObject
@@ -19,9 +21,10 @@ import org.koin.android.ext.android.inject
 import org.koin.android.scope.AndroidScopeComponent
 import org.koin.androidx.scope.activityScope
 import org.koin.core.scope.Scope
-import retrofit2.Response
+
 
 class MainActivity : AppCompatActivity(), AndroidScopeComponent {
+    private lateinit var mFirebaseAnalytics: FirebaseAnalytics
     private lateinit var adapter: MemeMainAdapter
     private lateinit var binding: ActivityMainBinding
     private lateinit var memeslist: MutableList<Meme>
@@ -34,6 +37,22 @@ class MainActivity : AppCompatActivity(), AndroidScopeComponent {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        createToken()
+
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
+
+        val data = this.intent.data
+        if (data != null && data.isHierarchical) {
+            val uri = this.intent.dataString
+            Log.i("trainingproject.com", "Deep link clicked $uri")
+        }
+
+        // Obtain the FirebaseAnalytics instance.
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+
+
         branchListener.branchResponse{flag, value ->
             branch_flag = flag
             index = value
@@ -41,9 +60,9 @@ class MainActivity : AppCompatActivity(), AndroidScopeComponent {
             Toast.makeText(this, "Scrolled to $index", Toast.LENGTH_SHORT).show()
         }
 
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        val view = binding.root
-        setContentView(view)
+        binding.crashBt.setOnClickListener {
+            throw RuntimeException("Test Crash")
+        }
 
         binding.apiBt.setOnClickListener {
             val intent = Intent(this, MemesActivity::class.java)
@@ -74,6 +93,8 @@ class MainActivity : AppCompatActivity(), AndroidScopeComponent {
                             deleteItem(item, index)
 
                         }
+                        val snaper = SnapHelperOneByOne()
+                        snaper.attachToRecyclerView(binding.mainRecycler)
                         binding.mainRecycler.adapter = adapter
 
                         binding.deleteAllBt.isEnabled = true
@@ -99,6 +120,15 @@ class MainActivity : AppCompatActivity(), AndroidScopeComponent {
         }
     }
 
+    private fun createToken(){
+        FirebaseMessaging.getInstance().token.addOnCompleteListener {
+            if(it.isComplete){
+                val token = it.result.toString()
+                FirebaseMessagingService.addTokenToFirestore(token)
+            }
+        }
+    }
+
     override fun onStart() {
         super.onStart()
         // Branch init
@@ -119,7 +149,7 @@ class MainActivity : AppCompatActivity(), AndroidScopeComponent {
 
     object branchListener : Branch.BranchReferralInitListener {
 
-        public lateinit var response : (Boolean, Int) -> Unit
+        lateinit var response : (Boolean, Int) -> Unit
 
         override fun onInitFinished(referringParams: JSONObject?, error: BranchError?) {
             if (error == null) {

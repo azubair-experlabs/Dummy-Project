@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "628199836408",
+    "project_id": "training-project-108ae",
+    "storage_bucket": "training-project-108ae.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:628199836408:android:b011baaaeb3e9df0a0890d",
+        "android_client_info": {
+          "package_name": "com.experlabs.training"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "628199836408-6tmdmqumu396ge7u9mnqipdp735hk9ae.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.experlabs.training",
+            "certificate_hash": "257e2fbcc2907f02d1e7eef7b66c910706cd3275"
+          }
+        },
+        {
+          "client_id": "628199836408-rf5lethk6ihpbcd7bb28buq0h6g5946b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDfSeG8_Q8hOARjeaLkuJGZtbQLtCNmlc0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "628199836408-rf5lethk6ihpbcd7bb28buq0h6g5946b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
